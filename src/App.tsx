@@ -1,29 +1,14 @@
 import React, { Component } from 'react';
-import VideoPlayer from './components/VideoPlayer/VideoPlayer';
-import logo from './logo.svg';
+import AppRouter from './routes/router';
 import './App.scss';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Ed pic dwwsa ssso it <code>src/App.tsx</code> and save to reloadasd            .
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-        <div className="App">
-          <VideoPlayer />
-        </div>
+        <div>HEADER</div>
+        <AppRouter />
+        <div>FOOTER</div>
       </div>
     );
   }
