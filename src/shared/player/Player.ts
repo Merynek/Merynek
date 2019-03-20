@@ -1,16 +1,17 @@
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import 'font-awesome/scss/font-awesome.scss';
+import { Series } from '../../components/Serials/source/serialJson';
 
 export class Player {
     private index: number;
-    private videoList: string[];
+    private series: Series;
     private videoJsPlayer!: videojs.Player;
     private options: videojs.PlayerOptions;
 
-    constructor(serials: string[]) {
+    constructor(series: Series) {
         this.index = 0;
-        this.videoList = serials;
+        this.series = series;
         this.options = this.getOptions();
     }
 
@@ -26,8 +27,13 @@ export class Player {
         this.videoJsPlayer.dispose();
     }
 
+    public setIndexAndPlay(index: number): void {
+        this.index = index;
+        this.playVideoByIndex();
+    }
+
     public next(): void {
-        if (this.index === this.videoList.length) {
+        if (this.index === this.series.parts.length -1) {
             return;
         }
         this.index++;
@@ -35,7 +41,7 @@ export class Player {
     }
 
     public previous(): void {
-        if (this.index) {
+        if (this.index === 0) {
             return;
         }
         this.index--;
@@ -57,17 +63,19 @@ export class Player {
 
     private playVideoByIndex(): void {
         this.videoJsPlayer.pause();
-        this.videoJsPlayer.src(this.videoList[this.index]);
+        this.videoJsPlayer.src(this.series.parts[this.index].link);
         this.videoJsPlayer.play();
     }
 
     private getOptions(): videojs.PlayerOptions {
+        let hasParts = this.series.parts.length;
+
         return {
             autoplay: true,
             controls: true,
             sources: [
                 {
-                    src: this.videoList[0]
+                    src: hasParts ? this.series.parts[0].link : ""
                 }
             ]
         };

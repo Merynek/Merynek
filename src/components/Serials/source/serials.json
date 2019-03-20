@@ -1,0 +1,58 @@
+{
+    "bbt": [
+        {
+            "number": 1,
+            "parts": [
+                {
+                    "name": "První díl",
+                    "number": 1,
+                    "link": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+                },
+                {
+                    "name": "Druhý díl",
+                    "number": 2,
+                    "link": "http://techslides.com/demos/sample-videos/small.mp4"
+                },
+                {
+                    "name": "Třetí díl",
+                    "number": 3,
+                    "link": "http://vjs.zencdn.net/v/oceans.mp4"
+                }
+            ]
+        },
+        {
+            "number": 2,
+            "parts": [
+                {
+                    "name": "První díl",
+                    "number": 1,
+                    "link": "http://vjs.zencdn.net/v/oceans.mp4"
+                }
+            ]
+        }
+    ],
+    "himym": [
+        {
+            "number": 1,
+            "parts": [
+                {
+                    "name": "První díl",
+                    "number": 1,
+                    "link": "http://techslides.com/demos/sample-videos/small.mp4"
+                }
+            ]
+        }
+    ],
+    "simpsons": [
+        {
+            "number": 1,
+            "parts": [
+                {
+                    "name": "První díl",
+                    "number": 1,
+                    "link": "http://vjs.zencdn.net/v/oceans.mp4"
+                }
+            ]
+        }
+    ]
+}
