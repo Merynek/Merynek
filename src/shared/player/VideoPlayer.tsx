@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Player } from './Player';
 import { Series } from '../../components/Serials/source/serialJson';
+import { Row, Col } from 'react-bootstrap';
 
 type Props = {
     series: Series;
@@ -26,13 +27,13 @@ class VideoPlayer extends Component<Props> {
 
     render() {
         return (
-        <div>   
+        <Row>
             <div data-vjs-player>
                 <video ref={ node => this.videoElement = node } className="video-js"></video>
             </div>
             <span>Díly</span>
             {this.renderPartButtons()}
-        </div>
+        </Row>
         )
     }
 
