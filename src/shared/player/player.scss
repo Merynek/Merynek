@@ -1,0 +1,55 @@
+.video-player {
+    .video-js {
+        width: 100%;
+        height: 720px;
+    }
+    span {
+        font-weight: bold;
+    }
+}
+
+.part-button {
+    background: #d0d4db;
+    cursor: pointer;
+    color: black;
+    font-weight: bold;
+    max-width: 700px;
+    width: 80%;
+    display: inline-block;
+    line-height: 20px;
+    margin: 0 auto;
+    margin-top: 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 2px solid black;
+    background: #d0d4db;
+
+    &.active {
+        background: yellow;
+    }
+}
+
+@media (max-width: 1024px) {
+    .video-player {
+        .video-js {
+            height: 600px;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .video-player {
+        .video-js {
+            height: 500px;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .video-player {
+        .video-js {
+            height: 350px;
+        }
+    }
+}

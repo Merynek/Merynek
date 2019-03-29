@@ -3,6 +3,7 @@ import VideoPlayer from '../../../shared/player/VideoPlayer';
 import { Series } from '../source/serialJson';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
+import './serial.scss';
 
 interface ISerial {
     number: number;
@@ -21,15 +22,16 @@ class Serial extends Component<ISerial> {
         <div>
             <Row>   
                 <Col>
-                    <span>{this.props.name}</span>
+                    <span className="serial-name">{this.props.name}</span>
                     <VideoPlayer series={serie} />
                 </Col>
             </Row>
-            <Row>
-                <Col>
-                    { this.renderSerieButtons() }
-                    <Link to="/serials"> Zpět na serialy</Link>
-                </Col>
+            <div className="divider"></div>
+            <Row className="series">
+                <span>Série</span>
+                { this.renderSerieButtons() }
+                <div className="divider"></div>
+                <Link className="back-to-serials-button" to="/serials"> Zpět na serialy</Link>
             </Row>
         </div>
         )
@@ -38,9 +40,7 @@ class Serial extends Component<ISerial> {
     renderSerieButtons() {
         return this.props.series.map((serie, key) => {
             return (
-                <div key={key}>
-                    <Link to={`/serials/${this.props.routeName}/${serie.number}`}>{serie.number}. Série</Link>
-                </div>
+                <Link key={key} className="serial-button" to={`/serials/${this.props.routeName}/${serie.number}`}>{serie.number}. Série</Link>
             );
         });
     }

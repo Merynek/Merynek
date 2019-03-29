@@ -2,23 +2,31 @@ import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import 'font-awesome/scss/font-awesome.scss';
 import { Series } from '../../components/Serials/source/serialJson';
+import { KeyboardEvent } from 'react';
 
 export class Player {
     private index: number;
     private series: Series;
+    private onChangePart: () => void;
     private videoJsPlayer!: videojs.Player;
     private options: videojs.PlayerOptions;
 
-    constructor(series: Series) {
+    constructor(series: Series, onChangePart: () => void) {
         this.index = 0;
         this.series = series;
+        this.onChangePart = onChangePart;
         this.options = this.getOptions();
+        this.createEvents();
+    }
+
+    public getIndex() {
+        return this.index;
     }
 
     public create(element: HTMLElement) {
         this.videoJsPlayer = videojs(element, this.options);
         this.videoJsPlayer.on("ended", () => {
-            this.next();
+            // this.next();
         });
         this.createButtons();
     }
@@ -48,6 +56,29 @@ export class Player {
         this.playVideoByIndex();
     }
 
+    private createEvents(): void {
+        window.addEventListener('keydown', e => {
+            this.keysHandler(<any>e);
+          });
+    }
+
+    private keysHandler(event: KeyboardEvent) {
+        let key = event.which;
+
+        switch(key) {
+            case 39: //ARROW_RIGHT
+                this.setCurrentTime(5);
+                break;
+            case 37: //ARROW_LEFT
+                this.setCurrentTime(-5);
+                break;
+        }
+    }
+
+    private setCurrentTime(seconds: number): void {
+        this.videoJsPlayer.currentTime(this.videoJsPlayer.currentTime() + seconds);
+    }
+
     private createButtons(): void {
         let previousButton = this.createButton("fa-step-backward");
         let forwardButton = this.createButton("fa-step-forward");
@@ -65,6 +96,7 @@ export class Player {
         this.videoJsPlayer.pause();
         this.videoJsPlayer.src(this.series.parts[this.index].link);
         this.videoJsPlayer.play();
+        this.onChangePart();
     }
 
     private getOptions(): videojs.PlayerOptions {
