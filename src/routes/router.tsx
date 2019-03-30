@@ -3,8 +3,10 @@ import { BrowserRouter, Switch, Route, RouteComponentProps } from 'react-router-
 import Home from '../components/Home/Home';
 import Serials from '../components/Serials/Serials';
 import Serial from '../components/Serials/Serial/Serial';
-import jsonSource from '../components/Serials/source/serials.json';
-import { serialsJson, Series } from '../components/Serials/source/serialJson';
+import bbtJson from '../components/Serials/source/bbt.json';
+import simpsonsJson from '../components/Serials/source/simpsons.json';
+import himymJson from '../components/Serials/source/himym.json';
+import { Series } from '../components/Serials/source/serialJson';
 
 class AppRouter extends Component {
     render() {
@@ -56,27 +58,27 @@ export default AppRouter;
 
 function BbtComponent(route: RouteComponentProps) {
     const number = Number(Object.create(route.match.params).number) || 1;
-    const json: serialsJson = jsonSource;
+    const json: Series[] = bbtJson;
 
     return (
-        <Serial key={number} number={number} series={json.bbt} name="Teorie velkého třesku" routeName="bbt"></Serial>
+        <Serial key={number} number={number} series={json} name="Teorie velkého třesku" routeName="bbt"></Serial>
     );
 }
 
 function HimymComponent(route: RouteComponentProps) {
     const number = Number(Object.create(route.match.params).number) || 1;
-    const json: serialsJson = jsonSource;
+    const json: Series[] = himymJson;
 
     return (
-        <Serial key={number} number={number} series={json.himym} name="Jak jsem poznal vaši matku" routeName="himym"></Serial>
+        <Serial key={number} number={number} series={json} name="Jak jsem poznal vaši matku" routeName="himym"></Serial>
     );
 }
 
 function SimpsonsComponent(route: RouteComponentProps) {
     const number = Number(Object.create(route.match.params).number) || 1;
-    const json: serialsJson = jsonSource;
+    const json: Series[] = simpsonsJson;
 
     return (
-        <Serial key={number} number={number} series={json.simpsons} name="Simpsnovi" routeName="simpsons"></Serial>
+        <Serial key={number} number={number} series={json} name="Simpsnovi" routeName="simpsons"></Serial>
     );
 }

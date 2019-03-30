@@ -19,7 +19,7 @@ class Serial extends Component<ISerial> {
         }) || this.props.series[0];
 
         return (
-        <div>
+        <div className="serial-page">
             <Row>   
                 <Col>
                     <span className="serial-name">{this.props.name}</span>

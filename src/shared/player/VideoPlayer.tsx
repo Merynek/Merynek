@@ -7,30 +7,36 @@ import './player.scss';
 type Props = {
     series: Series;
 }
+type IState = {
+    videoElementRef: React.RefObject<HTMLVideoElement>;
+    player: Player;
+}
 
-class VideoPlayer extends Component<Props> {
-    private videoElement: HTMLVideoElement | null;
-    private player: Player;
+class VideoPlayer extends Component<Props, IState> {
+    private myRef = React.createRef<HTMLVideoElement>()
 
     constructor(props: Props) {
         super(props);
-        this.videoElement =  document.createElement('video');
-        this.player = new Player(props.series, this.onChangePart.bind(this));
+
+        this.state = {
+            videoElementRef: this.myRef,
+            player: new Player(this.props.series, this.onChangePart.bind(this))
+        }
     }
 
     componentDidMount() {
-        this.player.create(this.videoElement as HTMLVideoElement);
+        this.state.player.create(this.state.videoElementRef.current as HTMLVideoElement);
     }
 
     componentWillUnmount() {
-        this.player.destroy();
+        this.state.player.destroy();
     }
 
     render() {
         return (
         <Row className="video-player">
             <div data-vjs-player>
-                <video ref={ node => this.videoElement = node } className={"video-js"} ></video>
+                <video ref={ this.myRef } className={"video-js"} ></video>
             </div>
             <span>Díly</span>
             {this.renderPartButtons()}
@@ -39,19 +45,22 @@ class VideoPlayer extends Component<Props> {
     }
 
     renderPartButtons() {
-        let currentIndex = this.player.getIndex();
+        let currentIndex = this.state.player.getIndex();
 
         return this.props.series.parts.map((part, index) => {
             return (
                 <div key={index}>
-                    <button className={"part-button " + (currentIndex === index ? "active" : "")} onClick={() => this.handlePartClick(index)}>{part.name}</button>
+                    <button className={"part-button " + (currentIndex === index ? "active" : "")} onClick={() => this.handlePartClick(index)}>
+                        <span className="part-number">{part.number}.</span>
+                        {part.name}
+                    </button>
                 </div>
             );
         });
     }
 
     handlePartClick(index: number) {
-        this.player.setIndexAndPlay(index);
+        this.state.player.setIndexAndPlay(index);
     }
 
     onChangePart() {

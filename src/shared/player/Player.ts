@@ -10,13 +10,14 @@ export class Player {
     private onChangePart: () => void;
     private videoJsPlayer!: videojs.Player;
     private options: videojs.PlayerOptions;
+    private destroyed: boolean;
 
     constructor(series: Series, onChangePart: () => void) {
         this.index = 0;
         this.series = series;
         this.onChangePart = onChangePart;
+        this.destroyed = false;
         this.options = this.getOptions();
-        this.createEvents();
     }
 
     public getIndex() {
@@ -28,11 +29,14 @@ export class Player {
         this.videoJsPlayer.on("ended", () => {
             // this.next();
         });
+        this.createEvents();
         this.createButtons();
+        this.videoJsPlayer.pause();
     }
 
     public destroy() {
         this.videoJsPlayer.dispose();
+        this.destroyed = true;
     }
 
     public setIndexAndPlay(index: number): void {
@@ -58,25 +62,60 @@ export class Player {
 
     private createEvents(): void {
         window.addEventListener('keydown', e => {
-            this.keysHandler(<any>e);
-          });
+            if (!this.destroyed) {
+                this.keysHandler(<any>e);
+            }
+        });
     }
 
     private keysHandler(event: KeyboardEvent) {
         let key = event.which;
+        let handled = false;
 
         switch(key) {
+            case 32: //SPACE
+                this.togglePlayer();
+                handled = true;
+                break;
             case 39: //ARROW_RIGHT
                 this.setCurrentTime(5);
+                handled = true;
                 break;
             case 37: //ARROW_LEFT
                 this.setCurrentTime(-5);
+                handled = true;
                 break;
+            case 38: //ARROW_UP
+                this.setVolume(0.1);
+                handled = true;
+                break;
+            case 40: //ARROW_DOWN
+                this.setVolume(-0.1);
+                handled = true;
+                break;
+        }
+
+        if (handled) {
+            event.preventDefault();
+        }
+    }
+
+    private togglePlayer(): void {
+        if (this.videoJsPlayer.paused()) {
+            this.videoJsPlayer.play();
+        } else {
+            this.videoJsPlayer.pause();
         }
     }
 
     private setCurrentTime(seconds: number): void {
         this.videoJsPlayer.currentTime(this.videoJsPlayer.currentTime() + seconds);
+    }
+
+    private setVolume(volume: number): void {
+        let currentVolume = this.videoJsPlayer.volume();
+
+        this.videoJsPlayer.volume(currentVolume + volume);
     }
 
     private createButtons(): void {

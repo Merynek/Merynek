@@ -1,0 +1,12 @@
+[
+    {
+        "number": 1,
+        "parts": [
+            {
+                "name": "První díl",
+                "number": 1,
+                "link": "http://vjs.zencdn.net/v/oceans.mp4"
+            }
+        ]
+    }
+]
