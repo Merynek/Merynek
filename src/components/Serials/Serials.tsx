@@ -7,20 +7,16 @@ class Serials extends Component<RouteComponentProps> {
         const { match } = this.props;
 
         return (
-            <div>
+            <div className="series">
+                <span>Seriály</span>
                 <Row>
                     <Col>
-                        <Link to={`${match.path}/bbt`}>BBT</Link>
+                        <Link className="serial-button" to={`${match.path}/bbt`}>BBT</Link>
                     </Col>
                 </Row>
                 <Row>
                     <Col>
-                    <Link to={`${match.path}/himym`}>HIMYM</Link>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                    <Link to={`${match.path}/simpsons`}>SIMPSONS</Link>
+                        <Link className="serial-button" to={`${match.path}/himym`}>HIMYM</Link>
                     </Col>
                 </Row>
             </div>

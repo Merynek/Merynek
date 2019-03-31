@@ -1,0 +1,27 @@
+$max-width-button: 700px;
+
+.series {
+    span {
+        display: inline-block;
+        margin: 0 auto;
+        width: 100%;
+        font-weight: bold;
+    }
+}
+
+.serial-button {
+    background: #444444;
+    color: white;
+    text-decoration: none;
+    max-width: $max-width-button;
+    width: 100%;
+    display: inline-block;
+    line-height: 40px;
+    margin: 0 auto;
+    margin-top: 5px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 2px solid black;
+    background: #444444;
+}
