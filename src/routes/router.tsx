@@ -61,7 +61,7 @@ function BbtComponent(route: RouteComponentProps) {
     const json: Series[] = bbtJson;
 
     return (
-        <Serial key={number} number={number} series={json} name="Teorie velkého třesku" routeName="bbt"></Serial>
+        <Serial isSerrial={true} key={number} number={number} series={json} name="Teorie velkého třesku" routeName="bbt"></Serial>
     );
 }
 
@@ -70,7 +70,7 @@ function HimymComponent(route: RouteComponentProps) {
     const json: Series[] = himymJson;
 
     return (
-        <Serial key={number} number={number} series={json} name="Jak jsem poznal vaši matku" routeName="himym"></Serial>
+        <Serial isSerrial={true} key={number} number={number} series={json} name="Jak jsem poznal vaši matku" routeName="himym"></Serial>
     );
 }
 
@@ -79,6 +79,6 @@ function MarvelComponent(route: RouteComponentProps) {
     const json: Series[] = marvelJson;
 
     return (
-        <Serial key={number} number={number} series={json} name="Marvel" routeName="marvel"></Serial>
+        <Serial isSerrial={false} key={number} number={number} series={json} name="Marvel" routeName="marvel"></Serial>
     );
 }
