@@ -93,6 +93,10 @@ export class Player {
                 this.setVolume(-0.1);
                 handled = true;
                 break;
+            case 78: //N key
+                this.next();
+                handled = true;
+                break; 
         }
 
         if (handled) {

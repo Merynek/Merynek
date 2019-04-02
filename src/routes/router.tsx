@@ -4,7 +4,7 @@ import Home from '../components/Home/Home';
 import Serials from '../components/Serials/Serials';
 import Serial from '../components/Serials/Serial/Serial';
 import bbtJson from '../components/Serials/source/bbt.json';
-import simpsonsJson from '../components/Serials/source/simpsons.json';
+import marvelJson from '../components/Serials/source/marvel.json';
 import himymJson from '../components/Serials/source/himym.json';
 import { Series } from '../components/Serials/source/serialJson';
 
@@ -19,7 +19,7 @@ class AppRouter extends Component {
                     <Route exact path="/serials" component={Serials} />
                     <Route path="/serials/bbt" component={this.BbtSwitch} />
                     <Route path="/serials/himym" component={this.HimymSwitch} />
-                    <Route path="/serials/simpsons" component={this.SimpsonsSwitch} />
+                    <Route path="/serials/marvel" component={this.MarvelSwitch} />
                 </Switch>
             </BrowserRouter>
         </div>
@@ -44,11 +44,11 @@ class AppRouter extends Component {
         );
     }
 
-    private SimpsonsSwitch() {
+    private MarvelSwitch() {
         return (
           <Switch>
-            <Route exact path='/serials/simpsons' component={SimpsonsComponent}/>
-            <Route path='/serials/simpsons/:number' component={SimpsonsComponent}/>
+            <Route exact path='/serials/marvel' component={MarvelComponent}/>
+            <Route path='/serials/marvel/:number' component={MarvelComponent}/>
           </Switch>
         );
     }
@@ -74,11 +74,11 @@ function HimymComponent(route: RouteComponentProps) {
     );
 }
 
-function SimpsonsComponent(route: RouteComponentProps) {
+function MarvelComponent(route: RouteComponentProps) {
     const number = Number(Object.create(route.match.params).number) || 1;
-    const json: Series[] = simpsonsJson;
+    const json: Series[] = marvelJson;
 
     return (
-        <Serial key={number} number={number} series={json} name="Simpsnovi" routeName="simpsons"></Serial>
+        <Serial key={number} number={number} series={json} name="Marvel" routeName="marvel"></Serial>
     );
 }

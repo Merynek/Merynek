@@ -11,12 +11,17 @@ class Serials extends Component<RouteComponentProps> {
                 <span>Seriály</span>
                 <Row>
                     <Col>
-                        <Link className="serial-button" to={`${match.path}/bbt`}>BBT</Link>
+                        <Link className="serial-button" to={`${match.path}/bbt`}>TBBT</Link>
                     </Col>
                 </Row>
                 <Row>
                     <Col>
                         <Link className="serial-button" to={`${match.path}/himym`}>HIMYM</Link>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Link className="serial-button" to={`${match.path}/marvel`}>MARVEL</Link>
                     </Col>
                 </Row>
             </div>
