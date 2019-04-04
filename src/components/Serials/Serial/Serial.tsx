@@ -44,9 +44,9 @@ class Serial extends Component<ISerial> {
                     <span>Série</span>
                     { this.renderSerieButtons() }
                     <div className="divider"></div>
-                    <Link className="back-to-serials-button" to="/serials"> Zpět na serialy</Link>
                 </Row>
             )}
+            <Link className="back-to-serials-button" to="/serials"> Zpět na serialy</Link>
         </div>
         )
     }
