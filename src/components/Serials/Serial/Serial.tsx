@@ -24,6 +24,15 @@ class Serial extends Component<ISerial> {
             <Row>   
                 <Col>
                     <span className="serial-name">{this.props.name}</span>
+                </Col>
+            </Row>
+            <Row>   
+                <Col>
+                    <span className="serial-name">{serie.number}. Série</span>
+                </Col>
+            </Row>
+            <Row>   
+                <Col>
                     <VideoPlayer series={serie} />
                 </Col>
             </Row>
@@ -43,9 +52,13 @@ class Serial extends Component<ISerial> {
     renderSerieButtons() {
         return this.props.series.map((serie, key) => {
             return (
-                <Link key={key} className="serial-button" to={`/serials/${this.props.routeName}/${serie.number}`}>{serie.number}. Série</Link>
+                <Link onClick={this.handleClickSerie} key={key} className="serial-button" to={`/serials/${this.props.routeName}/${serie.number}`}>{serie.number}. Série</Link>
             );
         });
+    }
+
+    handleClickSerie() {
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
 }
 
