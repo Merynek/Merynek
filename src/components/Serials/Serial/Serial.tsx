@@ -26,11 +26,13 @@ class Serial extends Component<ISerial> {
                     <span className="serial-name">{this.props.name}</span>
                 </Col>
             </Row>
-            <Row>   
+            {this.props.isSerrial && (
+                <Row>   
                 <Col>
                     <span className="serial-name">{serie.number}. Série</span>
                 </Col>
             </Row>
+            )}
             <Row>   
                 <Col>
                     <VideoPlayer series={serie} />
