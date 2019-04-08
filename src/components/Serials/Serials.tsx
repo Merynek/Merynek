@@ -24,6 +24,11 @@ class Serials extends Component<RouteComponentProps> {
                         <Link className="serial-button" to={`${match.path}/marvel`}>MARVEL</Link>
                     </Col>
                 </Row>
+                <Row>
+                    <Col>
+                        <Link className="serial-button" to={`${match.path}/x-men`}>X-MEN</Link>
+                    </Col>
+                </Row>
             </div>
         )
     }
