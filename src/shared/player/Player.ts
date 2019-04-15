@@ -3,6 +3,7 @@ import 'video.js/dist/video-js.css';
 import 'font-awesome/scss/font-awesome.scss';
 import { Series } from '../../components/Serials/source/serialJson';
 import { KeyboardEvent } from 'react';
+import { MeryRecognition } from '../SpeechRecognition/MeryRecognition';
 
 export class Player {
     private index: number;
@@ -18,6 +19,7 @@ export class Player {
         this.onChangePart = onChangePart;
         this.destroyed = false;
         this.options = this.getOptions();
+        new MeryRecognition();
     }
 
     public getIndex() {
