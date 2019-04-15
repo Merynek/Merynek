@@ -12,6 +12,7 @@ export class Player {
     private videoJsPlayer!: videojs.Player;
     private options: videojs.PlayerOptions;
     private destroyed: boolean;
+    private meryRecognition: MeryRecognition;
 
     constructor(series: Series, onChangePart: () => void) {
         this.index = 0;
@@ -19,7 +20,8 @@ export class Player {
         this.onChangePart = onChangePart;
         this.destroyed = false;
         this.options = this.getOptions();
-        new MeryRecognition();
+        this.meryRecognition = new MeryRecognition();
+        this.meryRecognition.setCallBack(this.next.bind(this));
     }
 
     public getIndex() {
