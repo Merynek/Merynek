@@ -4,33 +4,27 @@ export interface IWindow extends Window {
 const COMMAND_GREETING = ["hey mary", "hail mary", "hi mary", "how many", "emery", "how many how many", "hey matty", "hey marine"];
 const COMMAND_NEXT = ["next"];
 const COMMAND_BACK = ["back", "beck"];
-const SAY_GREETING = "Hello";
-
 
 export class MeryRecognition {
     private recognition: any;
     private onNext: () => void = () => {};
     private onBack: () => void = () => {};
-    private speechSynthesis!: SpeechSynthesisUtterance;
     private listening!: boolean;
     private working!: boolean;
-    private index!: number;
     private destroyed!: boolean;
+    private audio: HTMLAudioElement;
     
     constructor() {
         const {webkitSpeechRecognition} : IWindow = <IWindow>window;
         let isWebkit = webkitSpeechRecognition;
         this.recognition = isWebkit ? new webkitSpeechRecognition() : new SpeechRecognition();
-        this.speechSynthesis = new SpeechSynthesisUtterance();
-        this.speechSynthesis.rate = 0.6;
-        this.speechSynthesis.volume = 1;
         this.listening = false;
         this.working = false;
         this.destroyed = false;
-        this.index = 0;
         this.recognition.continuous = true;
         this.recognition.interimResults = true;
         this.recognition.lang = "en-US";
+        this.audio = document.body.appendChild(document.createElement("audio"));
         this.recognition.onresult = (event: any) => {
             if (!this.inProgress()) {
                 this.resolveResult(event);
@@ -38,7 +32,6 @@ export class MeryRecognition {
         }
         this.recognition.onend = (event: any) => {
             if (!this.destroyed) {
-                this.index = 0;
                 this.recognition.start();
             }
         }
@@ -47,6 +40,7 @@ export class MeryRecognition {
 
     public destroy() {
         this.destroyed = true;
+        document.body.removeChild(this.audio);
         this.recognition.abort();
         this.recognition.stop();
     }
@@ -60,56 +54,69 @@ export class MeryRecognition {
     }
 
     private resolveResult(event: any) {
-      this.working = true;
-        if (event.results[this.index].isFinal) {
-          let speech = event.results[this.index][0].transcript.trim().toLowerCase();
-          console.log(speech);
-          if (this.listening) {
-            this.resolveCommands(speech);
-          } else {
-            if (COMMAND_GREETING.indexOf(speech) > -1) {
-              this.startListening()
+        for (let i = 0; i < event.results.length; i++) {
+            let speech = event.results[i][0].transcript.trim().toLowerCase();
+
+            console.log(speech);
+            if (this.listening) {
+                if (this.resolveCommands(speech)) {
+                    let audio = new Audio(require("../Sounds/dobre.m4a"));
+                    audio.play();
+                    
+                    this.recognition.stop();
+                    break;
+                }
+            } else {
+                if (this.containString(speech, COMMAND_GREETING)) {
+                    this.startListening();
+                    this.recognition.stop();
+                    break;
+                }
             }
-          }
-          this.index++;
         }
-      
-      this.working = false;
+    }
+
+    private containString(speech: string, command: string[]): boolean {
+        for (let i = 0; i < command.length; i++) {
+            if (speech.includes(command[i])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private inProgress() {
-      return this.working;
-    }
-
-    private say(msg: string) {
-      this.speechSynthesis.text = msg;
-      window.speechSynthesis.speak(this.speechSynthesis);
+        return this.working;
     }
 
     private startListening() {
-      this.say(SAY_GREETING);
-      this.listening = true;
-      this.wait();
+        this.audio.src = require("../Sounds/coje.m4a");
+        this.audio.play();
+        this.listening = true;
+        this.wait();
     }
 
     private stopListening() {
-      this.listening = false;
+        this.listening = false;
     }
 
     private wait() {
-      setTimeout(() => {
-        this.stopListening();
-      }, 4000);
+        setTimeout(() => {
+            this.stopListening();
+        }, 5000);
     }
 
-    private resolveCommands(speech: string) {
-      if (COMMAND_NEXT.indexOf(speech) > -1) {
-        this.onNext();
-        return;
-      }
-      if (COMMAND_BACK.indexOf(speech) > -1) {
-        this.onBack();
-        return;
-      }
+    private resolveCommands(speech: string): boolean {
+        if (this.containString(speech, COMMAND_NEXT)) {
+            this.stopListening();
+            this.onNext();
+            return true;
+        }
+        if (this.containString(speech, COMMAND_BACK)) {
+            this.stopListening();
+            this.onBack();
+            return true;
+        }
+        return false;
     }
 }
