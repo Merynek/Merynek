@@ -1,14 +1,22 @@
 export interface IWindow extends Window {
     webkitSpeechRecognition: any;
 }
-const COMMAND_GREETING = ["hey mary", "hail mary", "hi mary", "how many", "emery", "how many how many", "hey matty", "hey marine"];
+const COMMAND_GREETING = [
+    "hey mary", "hail mary", "hi mary", 
+    "how many", "emery", "how many how many", "hey matty", 
+    "hey marine", "ameri", "a merry"];
 const COMMAND_NEXT = ["next"];
 const COMMAND_BACK = ["back", "beck"];
+const COMMAND_STOP = ["stop", "still"];
+const COMMAND_PLAY = ["play", "blame"];
+
 
 export class MeryRecognition {
     private recognition: any;
     private onNext: () => void = () => {};
     private onBack: () => void = () => {};
+    private onPlay: () => void = () => {};
+    private onStop: () => void = () => {};
     private listening!: boolean;
     private working!: boolean;
     private destroyed!: boolean;
@@ -53,23 +61,31 @@ export class MeryRecognition {
         this.onBack = callback;
     }
 
+    public setOnPlayCallBack(callback: () => void) {
+        this.onPlay = callback;
+    }
+
+    public setOnStopCallBack(callback: () => void) {
+        this.onStop = callback;
+    }
+
     private resolveResult(event: any) {
         for (let i = 0; i < event.results.length; i++) {
             let speech = event.results[i][0].transcript.trim().toLowerCase();
 
             console.log(speech);
             if (this.listening) {
+
                 if (this.resolveCommands(speech)) {
-                    let audio = new Audio(require("../Sounds/dobre.m4a"));
-                    audio.play();
-                    
-                    this.recognition.stop();
+                    this.audio.src = require("../Sounds/dobre.m4a");
+                    this.audio.play();
+                    this.recognition.abort();
                     break;
                 }
             } else {
                 if (this.containString(speech, COMMAND_GREETING)) {
                     this.startListening();
-                    this.recognition.stop();
+                    this.recognition.abort();
                     break;
                 }
             }
@@ -115,6 +131,16 @@ export class MeryRecognition {
         if (this.containString(speech, COMMAND_BACK)) {
             this.stopListening();
             this.onBack();
+            return true;
+        }
+        if (this.containString(speech, COMMAND_PLAY)) {
+            this.stopListening();
+            this.onPlay();
+            return true;
+        }
+        if (this.containString(speech, COMMAND_STOP)) {
+            this.stopListening();
+            this.onStop();
             return true;
         }
         return false;

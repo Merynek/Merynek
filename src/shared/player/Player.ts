@@ -37,6 +37,8 @@ export class Player {
             this.meryRecognition = new MeryRecognition();
             this.meryRecognition.setOnNextCallBack(this.next.bind(this));
             this.meryRecognition.setOnBackCallBack(this.previous.bind(this));
+            this.meryRecognition.setOnPlayCallBack(this.play.bind(this));
+            this.meryRecognition.setOnStopCallBack(this.pause.bind(this));
             return;
         }
         console.log("SpeechRecognition is not supported.");
@@ -53,7 +55,7 @@ export class Player {
         });
         this.createEvents();
         this.createButtons();
-        this.videoJsPlayer.pause();
+        this.pause();
     }
 
     public destroy() {
@@ -129,10 +131,18 @@ export class Player {
 
     private togglePlayer(): void {
         if (this.videoJsPlayer.paused()) {
-            this.videoJsPlayer.play();
+            this.play();
         } else {
-            this.videoJsPlayer.pause();
+            this.pause();
         }
+    }
+
+    private play(): void {
+        this.videoJsPlayer.play();
+    }
+
+    private pause(): void {
+        this.videoJsPlayer.pause();
     }
 
     private setCurrentTime(seconds: number): void {
@@ -161,7 +171,7 @@ export class Player {
     private playVideoByIndex(): void {
         this.videoJsPlayer.pause();
         this.videoJsPlayer.src(this.series.parts[this.index].link);
-        this.videoJsPlayer.play();
+        this.play();
         this.onChangePart();
     }
 
