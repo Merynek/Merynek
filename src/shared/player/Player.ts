@@ -5,6 +5,11 @@ import { Series } from '../../components/Serials/source/serialJson';
 import { KeyboardEvent } from 'react';
 import { MeryRecognition } from '../SpeechRecognition/MeryRecognition';
 
+interface IWindow extends Window {
+    webkitSpeechRecognition: any;
+    SpeechRecognition: any;
+}
+
 export class Player {
     private index: number;
     private series: Series;
@@ -12,7 +17,7 @@ export class Player {
     private videoJsPlayer!: videojs.Player;
     private options: videojs.PlayerOptions;
     private destroyed: boolean;
-    private meryRecognition: MeryRecognition;
+    private meryRecognition: MeryRecognition|undefined;
 
     constructor(series: Series, onChangePart: () => void) {
         this.index = 0;
@@ -20,8 +25,21 @@ export class Player {
         this.onChangePart = onChangePart;
         this.destroyed = false;
         this.options = this.getOptions();
-        this.meryRecognition = new MeryRecognition();
-        this.meryRecognition.setCallBack(this.next.bind(this));
+        this.createSpeechRecognition();
+    }
+
+    private createSpeechRecognition() {
+        const {webkitSpeechRecognition} : IWindow = <IWindow>window;
+        const {SpeechRecognition} : IWindow = <IWindow>window;
+        let isSuported = Boolean(webkitSpeechRecognition) || Boolean(SpeechRecognition);
+
+        if (isSuported) {
+            this.meryRecognition = new MeryRecognition();
+            this.meryRecognition.setOnNextCallBack(this.next.bind(this));
+            this.meryRecognition.setOnBackCallBack(this.previous.bind(this));
+            return;
+        }
+        console.log("SpeechRecognition is not supported.");
     }
 
     public getIndex() {
@@ -40,6 +58,7 @@ export class Player {
 
     public destroy() {
         this.videoJsPlayer.dispose();
+        this.meryRecognition && this.meryRecognition.destroy();
         this.destroyed = true;
     }
 
