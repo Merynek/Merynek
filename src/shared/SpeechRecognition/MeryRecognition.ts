@@ -4,9 +4,9 @@ export interface IWindow extends Window {
 const COMMAND_GREETING = [
     "hey mary", "hail mary", "hi mary", 
     "how many", "emery", "how many how many", "hey matty", 
-    "hey marine", "ameri", "a merry"];
+    "hey marine", "ameri", "a merry", "emily"];
 const COMMAND_NEXT = ["next"];
-const COMMAND_BACK = ["back", "beck"];
+const COMMAND_BACK = ["back", "beck", "bic", "pick"];
 const COMMAND_STOP = ["stop", "still"];
 const COMMAND_PLAY = ["play", "blame"];
 
@@ -32,7 +32,7 @@ export class MeryRecognition {
         this.recognition.continuous = true;
         this.recognition.interimResults = true;
         this.recognition.lang = "en-US";
-        this.audio = document.body.appendChild(document.createElement("audio"));
+        this.audio = document.getElementById("audio") as HTMLAudioElement;
         this.recognition.onresult = (event: any) => {
             if (!this.inProgress()) {
                 this.resolveResult(event);
@@ -48,8 +48,6 @@ export class MeryRecognition {
 
     public destroy() {
         this.destroyed = true;
-        document.body.removeChild(this.audio);
-        this.recognition.abort();
         this.recognition.stop();
     }
 
@@ -75,17 +73,16 @@ export class MeryRecognition {
 
             console.log(speech);
             if (this.listening) {
-
                 if (this.resolveCommands(speech)) {
                     this.audio.src = require("../Sounds/dobre.m4a");
                     this.audio.play();
-                    this.recognition.abort();
+                    this.recognition.stop();
                     break;
                 }
             } else {
                 if (this.containString(speech, COMMAND_GREETING)) {
                     this.startListening();
-                    this.recognition.abort();
+                    this.recognition.stop();
                     break;
                 }
             }

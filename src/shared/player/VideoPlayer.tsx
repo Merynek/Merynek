@@ -25,7 +25,8 @@ class VideoPlayer extends Component<Props, IState> {
     }
 
     componentDidMount() {
-        this.state.player.create(this.state.videoElementRef.current as HTMLVideoElement);
+        this.state.player.create(
+            this.state.videoElementRef.current as HTMLVideoElement)
     }
 
     componentWillUnmount() {
