@@ -35,7 +35,7 @@ class Serial extends Component<ISerial> {
             )}
             <Row>   
                 <Col>
-                    <VideoPlayer series={serie} />
+                    <VideoPlayer series={this.props.series} seriesNumber={this.props.number} />
                 </Col>
             </Row>
             <div className="divider"></div>

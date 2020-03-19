@@ -1,26 +1,38 @@
 import React, { Component } from 'react';
-import { Player } from './Player';
+import {IPlayInfo, Player} from './Player';
 import { Series } from '../../components/Serials/source/serialJson';
 import { Row } from 'react-bootstrap';
 import './player.scss';
 
 type Props = {
-    series: Series;
+    series: Series[];
+    seriesNumber: number;
 }
 type IState = {
     videoElementRef: React.RefObject<HTMLVideoElement>;
     player: Player;
+    currentPlayInfo: IPlayInfo;
+    autoPlay: boolean;
 }
 
 class VideoPlayer extends Component<Props, IState> {
     private myRef = React.createRef<HTMLVideoElement>()
+    private readonly currentSeries: Series;
 
     constructor(props: Props) {
         super(props);
+        this.currentSeries = this.props.series.find((serie: Series) => {
+            return serie.number === this.props.seriesNumber;
+        }) || this.props.series[0];
 
         this.state = {
             videoElementRef: this.myRef,
-            player: new Player(this.props.series, this.onChangePart.bind(this))
+            player: new Player(this.currentSeries, this.onChangePart.bind(this), this.props.series),
+            currentPlayInfo: {
+                seriesIndex: this.props.seriesNumber -1,
+                partIndex: 0
+            },
+            autoPlay: false
         }
     }
 
@@ -39,6 +51,21 @@ class VideoPlayer extends Component<Props, IState> {
             <div data-vjs-player>
                 <video ref={ this.myRef } className={"video-js"} ></video>
             </div>
+            <Row>
+                <div className="random-section">
+                    <button className="random-button" onClick={() => this.handleRandomClick()}>
+                        Náhodný výběr
+                    </button>
+                    <label className="autoplay-checkbox">
+                        <input type="checkbox"
+                           onClick={() => this.handleAutoPlayClick()}
+                           checked={this.state.autoPlay}
+                        />
+                        AUTOPLAY
+                    </label>
+                </div>
+                {this.renderPlayInfo()}
+            </Row>
             <span>Díly</span>
             {this.renderPartButtons()}
         </Row>
@@ -48,7 +75,7 @@ class VideoPlayer extends Component<Props, IState> {
     renderPartButtons() {
         let currentIndex = this.state.player.getIndex();
 
-        return this.props.series.parts.map((part, index) => {
+        return this.currentSeries.parts.map((part, index) => {
             return (
                 <div key={index}>
                     <button className={"part-button " + (currentIndex === index ? "active" : "")} onClick={() => this.handlePartClick(index)}>
@@ -62,10 +89,47 @@ class VideoPlayer extends Component<Props, IState> {
 
     handlePartClick(index: number) {
         this.state.player.setIndexAndPlay(index);
+        this.setCurrentInfo(index);
     }
 
-    onChangePart() {
+    setCurrentInfo(index: number) {
+        this.setState({
+            currentPlayInfo: {
+                seriesIndex: this.props.seriesNumber - 1,
+                partIndex: index
+            }
+        });
+    }
+
+    handleRandomClick() {
+        this.state.player.playRandomVideo();
+    }
+
+    handleAutoPlayClick() {
+        const autoplay = !this.state.autoPlay;
+        this.setState({
+            autoPlay: autoplay
+        });
+        this.state.player.setAutoPlay(autoplay);
+    }
+
+    renderPlayInfo() {
+        const info = this.state.currentPlayInfo;
+
+        return(
+            <Row className="play-info">
+                <span>{info.seriesIndex + 1}. Série - {info.partIndex + 1}. Díl</span>
+                <br/>
+                <span>{this.props.series[info.seriesIndex].parts[info.partIndex].name}</span>
+            </Row>
+        )
+    }
+
+    onChangePart(playInfo: IPlayInfo) {
         this.forceUpdate();
+        this.setState({
+            currentPlayInfo: playInfo
+        })
     }
 }
 

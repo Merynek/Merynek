@@ -12,6 +12,59 @@
     }
 }
 
+.play-info {
+    width: 50%;
+    background: yellow;
+    display: inline-block;
+    height: 50px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 2px solid black;
+}
+
+.autoplay-checkbox {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    -ms-transform: translateY(-50%) scale(1.3);
+    transform: translateY(-50%) scale(1.3);
+    /* Double-sized Checkboxes */
+    -moz-transform: translateY(-50%) scale(1.3); /* FF */
+    -webkit-transform: translateY(-50%) scale(1.3); /* Safari and Chrome */
+    -o-transform: translateY(-50%) scale(1.3); /* Opera */
+}
+.random-button {
+    font-weight: bold;
+    border: 2px solid black;
+    border-radius: 2px;
+    height: 30px;
+    width: 50%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.random-section {
+    float: left;
+    height: 50px;
+    display: inline-block;
+    background: #d0d4db;
+    color: black;
+    font-weight: bold;
+    width: 50%;
+    position: relative;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 2px solid black;
+    background: #d0d4db;
+}
+
 .part-button {
     background: #d0d4db;
     cursor: pointer;

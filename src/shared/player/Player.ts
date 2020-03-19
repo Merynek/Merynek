@@ -10,20 +10,29 @@ interface IWindow extends Window {
     SpeechRecognition: any;
 }
 
+export interface IPlayInfo {
+    seriesIndex: number;
+    partIndex: number;
+}
+
 export class Player {
     private index: number;
     private series: Series;
-    private onChangePart: () => void;
+    private allSeries: Series[];
+    private onChangePart: (playInfo: IPlayInfo) => void;
     private videoJsPlayer!: videojs.Player;
     private options: videojs.PlayerOptions;
     private destroyed: boolean;
+    private autoPlay: boolean;
     private meryRecognition: MeryRecognition|undefined;
 
-    constructor(series: Series, onChangePart: () => void) {
+    constructor(series: Series, onChangePart: (playInfo: IPlayInfo) => void, allSeries: Series[]) {
         this.index = 0;
         this.series = series;
+        this.allSeries = allSeries;
         this.onChangePart = onChangePart;
         this.destroyed = false;
+        this.autoPlay = false;
         this.options = this.getOptions();
         this.createSpeechRecognition();
     }
@@ -48,10 +57,16 @@ export class Player {
         return this.index;
     }
 
+    public setAutoPlay(autoplay: boolean) {
+        this.autoPlay = autoplay;
+    }
+
     public create(element: HTMLElement) {
         this.videoJsPlayer = videojs(element, this.options);
         this.videoJsPlayer.on("ended", () => {
-            // this.next();
+            if (this.autoPlay) {
+                this.playRandomVideo();
+            }
         });
         this.createEvents();
         this.createButtons();
@@ -172,7 +187,25 @@ export class Player {
         this.videoJsPlayer.pause();
         this.videoJsPlayer.src(this.series.parts[this.index].link);
         this.play();
-        this.onChangePart();
+        this.onChangePart({
+            seriesIndex: this.series.number - 1,
+            partIndex: this.index
+        });
+    }
+
+    public playRandomVideo() {
+        const seriesIndex = Math.floor(Math.random() * this.allSeries.length);
+        const series = this.allSeries[seriesIndex];
+        const partIndex = Math.floor(Math.random() * series.parts.length);
+        const part = this.allSeries[seriesIndex].parts[partIndex];
+
+        this.videoJsPlayer.pause();
+        this.videoJsPlayer.src(part.link);
+        this.play();
+        this.onChangePart({
+            seriesIndex: seriesIndex,
+            partIndex: partIndex
+        });
     }
 
     private getOptions(): videojs.PlayerOptions {
