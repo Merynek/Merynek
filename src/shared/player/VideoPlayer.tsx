@@ -13,6 +13,7 @@ type IState = {
     player: Player;
     currentPlayInfo: IPlayInfo;
     autoPlay: boolean;
+    randomPlay: boolean;
 }
 
 class VideoPlayer extends Component<Props, IState> {
@@ -32,7 +33,8 @@ class VideoPlayer extends Component<Props, IState> {
                 seriesIndex: this.props.seriesNumber -1,
                 partIndex: 0
             },
-            autoPlay: false
+            autoPlay: false,
+            randomPlay: false
         }
     }
 
@@ -53,9 +55,13 @@ class VideoPlayer extends Component<Props, IState> {
             </div>
             <Row>
                 <div className="random-section">
-                    <button className="random-button" onClick={() => this.handleRandomClick()}>
-                        Náhodný výběr
-                    </button>
+                    <label className="randomPlay-checkbox">
+                        <input type="checkbox"
+                               onClick={() => this.handleRandomPlayClick()}
+                               checked={this.state.randomPlay}
+                        />
+                        RANDOM
+                    </label>
                     <label className="autoplay-checkbox">
                         <input type="checkbox"
                            onClick={() => this.handleAutoPlayClick()}
@@ -101,8 +107,12 @@ class VideoPlayer extends Component<Props, IState> {
         });
     }
 
-    handleRandomClick() {
-        this.state.player.playRandomVideo();
+    handleRandomPlayClick() {
+        const randomPlay = !this.state.randomPlay;
+        this.setState({
+            randomPlay: randomPlay
+        });
+        this.state.player.setRandomPlay(randomPlay);
     }
 
     handleAutoPlayClick() {

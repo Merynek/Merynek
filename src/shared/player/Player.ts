@@ -24,6 +24,7 @@ export class Player {
     private options: videojs.PlayerOptions;
     private destroyed: boolean;
     private autoPlay: boolean;
+    private randomPlay: boolean;
     private meryRecognition: MeryRecognition|undefined;
 
     constructor(series: Series, onChangePart: (playInfo: IPlayInfo) => void, allSeries: Series[]) {
@@ -33,6 +34,7 @@ export class Player {
         this.onChangePart = onChangePart;
         this.destroyed = false;
         this.autoPlay = false;
+        this.randomPlay = false
         this.options = this.getOptions();
         this.createSpeechRecognition();
     }
@@ -61,11 +63,19 @@ export class Player {
         this.autoPlay = autoplay;
     }
 
+    public setRandomPlay(randomPlay: boolean) {
+        this.randomPlay = randomPlay;
+    }
+
     public create(element: HTMLElement) {
         this.videoJsPlayer = videojs(element, this.options);
         this.videoJsPlayer.on("ended", () => {
             if (this.autoPlay) {
-                this.playRandomVideo();
+                if (this.randomPlay) {
+                    this.playRandomVideo();
+                } else {
+                    this.next();
+                }
             }
         });
         this.createEvents();
@@ -85,11 +95,15 @@ export class Player {
     }
 
     public next(): void {
-        if (this.index === this.series.parts.length -1) {
-            return;
+        if (this.randomPlay) {
+            this.playRandomVideo();
+        } else {
+            if (this.index === this.series.parts.length -1) {
+                return;
+            }
+            this.index++;
+            this.playVideoByIndex();
         }
-        this.index++;
-        this.playVideoByIndex();
     }
 
     public previous(): void {
