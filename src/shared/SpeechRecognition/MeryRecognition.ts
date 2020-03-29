@@ -32,18 +32,30 @@ export class MeryRecognition {
         this.recognition.continuous = true;
         this.recognition.interimResults = true;
         this.recognition.lang = "en-US";
-        this.audio = document.getElementById("audio") as HTMLAudioElement;
+        this.audio = MeryRecognition.prepareAudioElement();
         this.recognition.onresult = (event: any) => {
             if (!this.inProgress()) {
                 this.resolveResult(event);
             }
-        }
+        };
         this.recognition.onend = (event: any) => {
             if (!this.destroyed) {
                 this.recognition.start();
             }
-        }
+        };
         this.recognition.start();
+    }
+
+    private static prepareAudioElement() {
+        const idAudio = 'meryAudio';
+        const existingAudio = document.getElementById(idAudio);
+
+        if (existingAudio) {
+            existingAudio.remove();
+        }
+        const audioEl = document.createElement("AUDIO") as HTMLAudioElement;
+        audioEl.setAttribute("id", idAudio);
+        return audioEl;
     }
 
     public destroy() {
@@ -75,8 +87,10 @@ export class MeryRecognition {
             if (this.listening) {
                 if (this.resolveCommands(speech)) {
                     this.audio.src = require("../Sounds/dobre.m4a");
-                    this.audio.play();
-                    this.recognition.stop();
+                    this.audio.play().then(() => {
+                        this.recognition.stop();
+                    });
+
                     break;
                 }
             } else {
@@ -104,9 +118,13 @@ export class MeryRecognition {
 
     private startListening() {
         this.audio.src = require("../Sounds/coje.m4a");
-        this.audio.play();
-        this.listening = true;
-        this.wait();
+        this.audio.play().then(() => {
+            this.listening = true;
+            this.wait();
+        }).catch((error) => {
+            console.log(error);
+        });
+
     }
 
     private stopListening() {

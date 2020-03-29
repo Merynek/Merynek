@@ -34,7 +34,7 @@ export class Player {
         this.onChangePart = onChangePart;
         this.destroyed = false;
         this.autoPlay = false;
-        this.randomPlay = false
+        this.randomPlay = false;
         this.options = this.getOptions();
         this.createSpeechRecognition();
     }
@@ -42,9 +42,9 @@ export class Player {
     private createSpeechRecognition() {
         const {webkitSpeechRecognition} : IWindow = <IWindow>window;
         const {SpeechRecognition} : IWindow = <IWindow>window;
-        let isSuported = Boolean(webkitSpeechRecognition) || Boolean(SpeechRecognition);
+        let isSupported = Boolean(webkitSpeechRecognition) || Boolean(SpeechRecognition);
 
-        if (isSuported) {
+        if (isSupported) {
             this.meryRecognition = new MeryRecognition();
             this.meryRecognition.setOnNextCallBack(this.next.bind(this));
             this.meryRecognition.setOnBackCallBack(this.previous.bind(this));

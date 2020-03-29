@@ -17,7 +17,7 @@ type IState = {
 }
 
 class VideoPlayer extends Component<Props, IState> {
-    private myRef = React.createRef<HTMLVideoElement>()
+    private myRef = React.createRef<HTMLVideoElement>();
     private readonly currentSeries: Series;
 
     constructor(props: Props) {
@@ -51,21 +51,21 @@ class VideoPlayer extends Component<Props, IState> {
         return (
         <Row className="video-player">
             <div data-vjs-player>
-                <video ref={ this.myRef } className={"video-js"} ></video>
+                <video ref={this.myRef} className={"video-js"} />
             </div>
             <Row>
                 <div className="random-section">
                     <label className="randomPlay-checkbox">
                         <input type="checkbox"
-                               onClick={() => this.handleRandomPlayClick()}
+                               onChange={() => this.handleRandomPlayClick()}
                                checked={this.state.randomPlay}
                         />
                         RANDOM
                     </label>
                     <label className="autoplay-checkbox">
                         <input type="checkbox"
-                           onClick={() => this.handleAutoPlayClick()}
-                           checked={this.state.autoPlay}
+                                onChange={() => this.handleAutoPlayClick()}
+                                checked={this.state.autoPlay}
                         />
                         AUTOPLAY
                     </label>
