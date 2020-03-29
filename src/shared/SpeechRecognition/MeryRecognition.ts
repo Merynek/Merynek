@@ -2,7 +2,7 @@ export interface IWindow extends Window {
     webkitSpeechRecognition: any;
 }
 const COMMAND_GREETING = [
-    "hey mary", "hail mary", "hi mary", 
+    "hey mary", "hail mary", "hi mary", "hi mate", "i'm ready", "jaime",
     "how many", "emery", "how many how many", "hey matty", 
     "hey marine", "ameri", "a merry", "emily"];
 const COMMAND_NEXT = ["next"];
