@@ -7,6 +7,7 @@ import bbtJson from '../components/Serials/source/bbt.json';
 import marvelJson from '../components/Serials/source/marvel.json';
 import himymJson from '../components/Serials/source/himym.json';
 import xmenJson from '../components/Serials/source/xmen.json';
+import dcJson from '../components/Serials/source/dc.json';
 import { Series } from '../components/Serials/source/serialJson';
 
 class AppRouter extends Component {
@@ -22,6 +23,7 @@ class AppRouter extends Component {
                     <Route path="/serials/himym" component={this.HimymSwitch} />
                     <Route path="/serials/marvel" component={this.MarvelSwitch} />
                     <Route path="/serials/x-men" component={this.XmenSwitch} />
+                    <Route path="/serials/dc" component={this.DcSwitch} />
                 </Switch>
             </BrowserRouter>
         </div>
@@ -63,6 +65,15 @@ class AppRouter extends Component {
           </Switch>
         );
     }
+
+    private DcSwitch() {
+        return (
+          <Switch>
+            <Route exact path='/serials/dc' component={DcComponent}/>
+            <Route path='/serials/dc/:number' component={DcComponent}/>
+          </Switch>
+        );
+    }
 }
 
 export default AppRouter;
@@ -100,5 +111,14 @@ function XmenComponent(route: RouteComponentProps) {
 
     return (
         <Serial isSerrial={false} key={number} number={number} series={json} name="X-men" routeName="x-men"></Serial>
+    );
+}
+
+function DcComponent(route: RouteComponentProps) {
+    const number = Number(Object.create(route.match.params).number) || 1;
+    const json: Series[] = dcJson;
+
+    return (
+        <Serial isSerrial={false} key={number} number={number} series={json} name="DC Extended Universe" routeName="dc"></Serial>
     );
 }

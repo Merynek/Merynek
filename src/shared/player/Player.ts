@@ -40,9 +40,10 @@ export class Player {
     }
 
     private createSpeechRecognition() {
-        const {webkitSpeechRecognition} : IWindow = <IWindow>window;
-        const {SpeechRecognition} : IWindow = <IWindow>window;
-        let isSupported = Boolean(webkitSpeechRecognition) || Boolean(SpeechRecognition);
+        const {webkitSpeechRecognition} : IWindow = <IWindow><unknown>window;
+        const {SpeechRecognition} : IWindow = <IWindow><unknown>window;
+        let isSupported = false;
+        //Boolean(webkitSpeechRecognition) || Boolean(SpeechRecognition);
 
         if (isSupported) {
             this.meryRecognition = new MeryRecognition();

@@ -23,7 +23,7 @@ export class MeryRecognition {
     private audio: HTMLAudioElement;
     
     constructor() {
-        const {webkitSpeechRecognition} : IWindow = <IWindow>window;
+        const {webkitSpeechRecognition} : IWindow = <IWindow><unknown>window;
         let isWebkit = webkitSpeechRecognition;
         this.recognition = isWebkit ? new webkitSpeechRecognition() : new SpeechRecognition();
         this.listening = false;
