@@ -1,0 +1,53 @@
+@font-face{
+  font-family: "PrcinkaFont";
+  src: url("../components/ImperialScript-Regular.ttf") format("truetype");
+}
+
+$size: 350px;
+.layout {
+  font-family: 'PrcinkaFont', cursive;
+  font-size: 40px;
+  font-weight: 800;
+  position: relative;
+
+  width: $size;
+  height: $size;
+
+  .wrapper {
+    position: absolute;
+
+    .photoWrapper {
+      text-align:center;
+      display:inline-block;
+      list-style:none;
+      position:relative;
+      border:solid 15px #fff;
+      background:#fff;
+      box-shadow:0 0 15px 0 #555;
+      top:10px;
+
+      &.invisible {
+        left: -2000px;
+      }
+      &.visible {
+        left: 0;
+      }
+      transition:left 2s ease;
+      -o-transition:left 2s ease;
+      -moz-transition:left 2s ease;
+      -webkit-transition:left 2s ease;
+
+      img {
+        object-fit: cover;
+        border: 10px solid black;
+        width: $size;
+        height: $size;
+      }
+
+      p{
+        margin: 15px 0;
+      }
+    }
+  }
+
+}

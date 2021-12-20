@@ -1,0 +1,17 @@
+.line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 100px 0 400px 0;
+
+  .item {
+    display: flex;
+    position: relative;
+  }
+}
+
+@media (max-width: 768px) {
+  .line {
+    flex-direction: column;
+  }
+}

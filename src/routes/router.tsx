@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route, RouteComponentProps } from 'react-router-dom';
+import { Switch, Route, RouteComponentProps } from 'react-router-dom';
 import Home from '../components/Home/Home';
 import Serials from '../components/Serials/Serials';
 import Serial from '../components/Serials/Serial/Serial';
@@ -9,24 +9,39 @@ import himymJson from '../components/Serials/source/himym.json';
 import xmenJson from '../components/Serials/source/xmen.json';
 import dcJson from '../components/Serials/source/dc.json';
 import { Series } from '../components/Serials/source/serialJson';
+import Prcinka from "../components/Prcinka/Prcinka";
 
-class AppRouter extends Component {
+class AppRouter extends Component<RouteComponentProps> {
+
+    get isPrcinka(): boolean {
+        const {pathname} = this.props.location;
+        return pathname === "/prcinka";
+    }
+
+    get headerTitle(): string {
+        if (this.isPrcinka) {
+            return "PRCINKA";
+        }
+        return "MERYNEK"
+    }
+
+
     render() {
         return (
-        <div>   
-            <BrowserRouter>
+            <div className="App">
+                <div className="header">{this.headerTitle}</div>
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/home" component={Home} />
                     <Route exact path="/serials" component={Serials} />
+                    <Route exact path="/prcinka" component={Prcinka} />
                     <Route path="/serials/bbt" component={this.BbtSwitch} />
                     <Route path="/serials/himym" component={this.HimymSwitch} />
                     <Route path="/serials/marvel" component={this.MarvelSwitch} />
                     <Route path="/serials/x-men" component={this.XmenSwitch} />
                     <Route path="/serials/dc" component={this.DcSwitch} />
                 </Switch>
-            </BrowserRouter>
-        </div>
+            </div>
         )
     }
 
