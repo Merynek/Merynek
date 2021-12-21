@@ -10,10 +10,10 @@ class Prcinka extends Component {
             <div className="prcinka">
                 <div className={"line"}>
                     <div className={"item"}>
-                        <Photo imgSrc={PradedImg} rotate={"-15"} text={"Image #1"} />
+                        <Photo imgSrc={PradedImg} rotate={"-10"} text={"Image #1"} />
                     </div>
                     <div className={"item"}>
-                        <Photo imgSrc={PradedImg} rotate={"15"} text={"Image #2"} />
+                        <Photo imgSrc={PradedImg} rotate={"10"} text={"Image #2"} />
                     </div>
                 </div>
                 <div className={"line"}>

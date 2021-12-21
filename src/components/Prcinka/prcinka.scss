@@ -1,8 +1,12 @@
+.prcinka {
+  padding-top: 50px;
+}
+
 .line {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 100px 0 400px 0;
+  margin: 0 0 200px 0;
 
   .item {
     display: flex;
@@ -10,8 +14,16 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1400px) {
+  .line {
+    justify-content: space-around;
+  }
+}
+@media (max-width: 868px) {
   .line {
     flex-direction: column;
+    justify-content: unset;
+    align-items: center;
+    margin: 0 0 0 0;
   }
 }

@@ -3,14 +3,17 @@
   src: url("../components/ImperialScript-Regular.ttf") format("truetype");
 }
 
-$size: 350px;
+$size: 450px;
+$border: 15px;
+$imgBorder: 10px;
+
 .layout {
   font-family: 'PrcinkaFont', cursive;
   font-size: 40px;
   font-weight: 800;
   position: relative;
 
-  width: $size;
+  width: $size + $border + $imgBorder;
   height: $size;
 
   .wrapper {
@@ -21,10 +24,9 @@ $size: 350px;
       display:inline-block;
       list-style:none;
       position:relative;
-      border:solid 15px #fff;
+      border:solid $border #fff;
       background:#fff;
-      box-shadow:0 0 15px 0 #555;
-      top:10px;
+      box-shadow:0 0 $border 0 #555;
 
       &.invisible {
         left: -2000px;
@@ -39,7 +41,7 @@ $size: 350px;
 
       img {
         object-fit: cover;
-        border: 10px solid black;
+        border: $imgBorder solid black;
         width: $size;
         height: $size;
       }
@@ -49,5 +51,49 @@ $size: 350px;
       }
     }
   }
+}
 
+@media (max-width: 1150px) {
+  $size: 400px;
+  .layout {
+    width: $size + $border + $imgBorder;
+    .wrapper {
+      .photoWrapper {
+        img {
+          width: $size;
+          height: $size;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  $size: 350px;
+  .layout {
+    width: $size + $border + $imgBorder;
+    .wrapper {
+      .photoWrapper {
+        img {
+          width: $size;
+          height: $size;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 540px) {
+  $size: 300px;
+  .layout {
+    width: $size + $border + $imgBorder;
+    .wrapper {
+      .photoWrapper {
+        img {
+          width: $size;
+          height: $size;
+        }
+      }
+    }
+  }
 }

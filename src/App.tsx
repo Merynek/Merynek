@@ -4,7 +4,7 @@ import AppRouter from './routes/router';
 import './App.scss';
 
 class App extends Component {
-  render() {
+    render() {
       const Routes = withRouter(props => <AppRouter {...props}/>);
     return (
         <BrowserRouter>
