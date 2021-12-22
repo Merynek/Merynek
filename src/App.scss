@@ -18,6 +18,9 @@ $primary-color: #000000;
   line-height: 70px;
   font-size: 50px;
   font-weight: bold;
+  &.prcinka {
+    font-size: 100px;
+  }
 }
 
 .App-header {

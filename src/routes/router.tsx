@@ -12,6 +12,11 @@ import { Series } from '../components/Serials/source/serialJson';
 import Prcinka from "../components/Prcinka/Prcinka";
 
 class AppRouter extends Component<RouteComponentProps> {
+    componentDidMount() {
+        if (this.isPrcinka) {
+            document.body.style.background = "#e37d89";
+        }
+    }
 
     get isPrcinka(): boolean {
         const {pathname} = this.props.location;
@@ -25,11 +30,15 @@ class AppRouter extends Component<RouteComponentProps> {
         return "MERYNEK"
     }
 
+    get headerStyle() {
+        return `header ${this.isPrcinka && "prcinka"}`;
+    }
+
 
     render() {
         return (
             <div className="App">
-                <div className="header">{this.headerTitle}</div>
+                <div className={this.headerStyle}>{this.headerTitle}</div>
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/home" component={Home} />
