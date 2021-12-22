@@ -25,7 +25,7 @@ class AppRouter extends Component<RouteComponentProps> {
 
     get headerTitle(): string {
         if (this.isPrcinka) {
-            return "PRCINKA";
+            return "PRCINKA ♥";
         }
         return "MERYNEK"
     }
