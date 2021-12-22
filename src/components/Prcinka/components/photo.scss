@@ -1,6 +1,6 @@
 @font-face{
   font-family: "PrcinkaFont";
-  src: url("../components/ImperialScript-Regular.ttf") format("truetype");
+  src: url("../components/font.ttf") format("truetype");
 }
 
 $size: 450px;
@@ -9,8 +9,8 @@ $imgBorder: 10px;
 
 .layout {
   font-family: 'PrcinkaFont', cursive;
-  font-size: 40px;
-  font-weight: 800;
+  font-size: 50px;
+  font-weight: 600;
   position: relative;
 
   width: $size + $border + $imgBorder;
@@ -42,6 +42,7 @@ $imgBorder: 10px;
       img {
         object-fit: cover;
         border: $imgBorder solid black;
+        background-color: black;
         width: $size;
         height: $size;
       }

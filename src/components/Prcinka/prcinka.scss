@@ -11,12 +11,21 @@
   .item {
     display: flex;
     position: relative;
+    margin-bottom: 0;
   }
 }
 
 @media (max-width: 1400px) {
   .line {
     justify-content: space-around;
+    margin: 0 0 200px 0;
+  }
+}
+
+@media (max-width: 1150px) {
+  .line {
+    justify-content: space-around;
+    margin: 0 0 120px 0;
   }
 }
 @media (max-width: 868px) {
@@ -25,5 +34,17 @@
     justify-content: unset;
     align-items: center;
     margin: 0 0 0 0;
+    .item {
+      margin-bottom: 100px;
+    }
+  }
+}
+
+@media (max-width: 540px) {
+  .line {
+    margin: 0 0 0 0;
+    .item {
+      margin-bottom: 20px;
+    }
   }
 }

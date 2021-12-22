@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, CSSProperties} from "react";
 import {InView} from "react-intersection-observer";
 import './photo.scss';
 
@@ -8,6 +8,7 @@ interface IPhotoProps {
     onView?: () => void;
     rotate: string;
     text: string;
+    imgStyle?: CSSProperties;
 }
 
 interface IPhotoState {
@@ -28,23 +29,23 @@ class Photo extends Component<IPhotoProps, IPhotoState> {
                 this.setState({
                     inView: inView
                 })
-            }, 300)
+            }, 1)
         }
     }
 
 
     render() {
-        const { imgSrc, text, rotate} = this.props;
+        const { imgSrc, text, rotate, imgStyle} = this.props;
         return <InView
             className={"layout"}
-            delay={205}
+            delay={1}
             threshold={0.2}
             style={{transform: `rotate(${rotate}deg)`}}
             root={null}
             onChange={this._onChange}>
             <div className={`wrapper`}>
                 <div className={`photoWrapper invisible ${this.state.inView && "visible"}`}>
-                    <img src={imgSrc} />
+                    <img src={imgSrc} style={imgStyle} />
                     <p>{text}</p>
                 </div>
             </div>
