@@ -53,6 +53,22 @@ import SexySuper from "./images/sexy/sexy_super_6.jpg";
 import './prcinka.scss';
 
 class Prcinka extends Component {
+    private _song: HTMLAudioElement;
+
+    constructor(props: any) {
+        super(props);
+        this._song = new Audio(require("./song.mp3"))
+    }
+
+    private _play = () => {
+        debugger;
+        this._song.play();
+    }
+
+    private _pause = () => {
+        this._song.pause();
+    }
+
     private _renderLine = (image_1: string, text_1: string, style_1: CSSProperties,  image_2: string, text_2: string, style_2: CSSProperties) => {
         return <div className={"line"}>
             <div className={"item"}>
@@ -70,7 +86,7 @@ class Prcinka extends Component {
             <div className="prcinka">
                 <p className={"text welcomeText"}>Vítejte v nové sekci o mě a o nejúžasnějším člověku, kterýho sem kdy potkal. Pokud nejsi Prcinka tak zmiz neboť právě teď se stahuje trojský kůň páté úrovně a budou ti urkradena všechna hesla a přístupy. </p>
                 <p className={"text text1"}>Tato sekce by měla provést Prcinku našema prvníma zážitkama, jestli jich je málo nebo hodně je jedno ale byly to ty nejkrásnější časy a to protože byly s tebou.</p>
-                <p className={"text text1"}>Pokračuj níže prcí :-)</p>
+                <p className={"text text1"}>Pokud chceš <span className={"play_button"} onClick={() => this._play()}>zde</span> si pusť muziku a pokračuj níže prcí :-)</p>
                 <div className={"divider"} />
                 <p className={"text dividerText"}>Myslím si že to ještě není oficiální tady :D</p>
                 {this._renderLine(Img1, "Naše jedna vůbec z prvních fotek", {}, Img2, "Náš první hokej :D", {objectPosition: "0px 0px"})}
