@@ -1,3 +1,9 @@
+@font-face{
+  font-family: "NewFont";
+  src: url("./font.ttf") format("truetype");
+}
+
+
 .prcinka {
   padding-top: 50px;
 }
@@ -15,6 +21,33 @@
   }
 }
 
+.text {
+  font-family: 'NewFont', cursive;
+}
+
+.welcomeText {
+  font-size: 55px;
+  margin: 250px 0;
+}
+
+.text1 {
+  font-size: 50px;
+  margin: 250px 0 150px 0;
+}
+.dividerText {
+  font-size: 50px;
+  padding: 100px 0 50px 0;
+}
+.divider {
+  opacity: 0;
+  margin: 250px 0;
+}
+.sexySection {
+  font-size: 70px;
+  font-weight: 900;
+}
+
+
 @media (max-width: 1400px) {
   .line {
     justify-content: space-around;
@@ -29,6 +62,16 @@
   }
 }
 @media (max-width: 868px) {
+  .welcomeText {
+    margin: 150px 0;
+  }
+  .text1 {
+    margin: 150px 0;
+  }
+  .dividerText {
+    padding: 50px 0 20px 0;
+  }
+
   .line {
     flex-direction: column;
     justify-content: unset;

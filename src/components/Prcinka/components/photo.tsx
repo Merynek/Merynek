@@ -29,7 +29,7 @@ class Photo extends Component<IPhotoProps, IPhotoState> {
                 this.setState({
                     inView: inView
                 })
-            }, 1)
+            }, 300)
         }
     }
 
