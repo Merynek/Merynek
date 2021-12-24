@@ -10,11 +10,19 @@ import xmenJson from '../components/Serials/source/xmen.json';
 import dcJson from '../components/Serials/source/dc.json';
 import { Series } from '../components/Serials/source/serialJson';
 import Prcinka from "../components/Prcinka/Prcinka";
+// @ts-ignore
+import hearFavicon from "../routes/heart.ico";
 
 class AppRouter extends Component<RouteComponentProps> {
     componentDidMount() {
         if (this.isPrcinka) {
             document.body.style.background = "#e37d89";
+            document.title = "Prcinka"
+            const favIcon = document.getElementById("favicon");
+            if (favIcon) {
+                // @ts-ignore
+                favicon.href = hearFavicon;
+            }
         }
     }
 

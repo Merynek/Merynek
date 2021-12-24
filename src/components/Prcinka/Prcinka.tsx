@@ -61,12 +61,15 @@ class Prcinka extends Component {
     }
 
     private _play = () => {
-        debugger;
-        this._song.play();
-    }
-
-    private _pause = () => {
-        this._song.pause();
+        if (this._song.ended) {
+            this._song.play();
+        } else {
+            if (this._song.paused) {
+                this._song.play();
+            } else {
+                this._song.pause();
+            }
+        }
     }
 
     private _renderLine = (image_1: string, text_1: string, style_1: CSSProperties,  image_2: string, text_2: string, style_2: CSSProperties) => {
@@ -98,7 +101,7 @@ class Prcinka extends Component {
                 <p className={"text dividerText"}>Minulej rok tolik dárku a dneska? :( :D</p>
                 {this._renderLine(Img9, "Náš první sněhulák", {objectPosition: "0px 0px"}, Img10, "Naše první vánoce", {})}
                 <p className={"text dividerText"}>Tohle si letos zopakujem</p>
-                {this._renderLine(Img11, "Naše první hory na snowboardu", {}, Img11_2, "Naše první praděd", {})}
+                {this._renderLine(Img11, "Naše první hory na snowboardu", {}, Img11_2, "Naš první praděd", {})}
                 <p className={"text dividerText"}>Vzpomínka na 4rku :(</p>
                 {this._renderLine(Img12, "Naš první silvestr", {}, Img13, "Naše první miluju tě", {})}
                 {this._renderLine(Img14, "Naše první vodopády", {}, Img15, "Naše první profi focení", {objectPosition: "0px 0px"})}
@@ -106,14 +109,14 @@ class Prcinka extends Component {
                 <p className={"text dividerText"}>Sice nám to asi moc nešlo ale zopakoval bych Golfik :-*</p>
                 {this._renderLine(Img19, "Náš první golf", {}, Img20, "Naš první piknik v horách", {})}
                 <p className={"text dividerText"}>Nejlepší způsob jak sledovat hvězdy :-)</p>
-                {this._renderLine(Img21, "Náš první piknik na koupališt", {}, Img22, "Náše první koukání na hvězdy", {})}
+                {this._renderLine(Img21, "Náš první piknik na koupališti", {}, Img22, "Náše první koukání na hvězdy", {})}
                 <p className={"text dividerText"}>Tehdy naše první feraty a ani sme o tom nevěděli :D</p>
-                {this._renderLine(Img23, "Naše první feraty", {}, Img24, "Našich prvních 2000 m nad mořem", {})}
+                {this._renderLine(Img23, "Naše první feraty", {}, Img24, "Našich prvních 2000 m. nad mořem", {})}
                 <p className={"text dividerText"}>Tady dva nečekany zážitky a to loďka a jeskyně jenom pro nás</p>
                 {this._renderLine(Img25, "Naše první jízda na loďce", {}, Img26, "Naše první procházka v jeskyni", {})}
                 {this._renderLine(Img27, "Naše první svatba :D", {objectPosition: "0px 0px"}, Img28, "Náš první vyhlídkový let", {})}
                 <p className={"text dividerText"}>Naše klasická rutina, která nás doufám nikdy nepřestane bavit (myslím kino :D)</p>
-                {this._renderLine(Img30, "Naše 42 kino s tortilama", {objectPosition: "0px -95px"}, Img31, "Náš první Adršpach", {})}
+                {this._renderLine(Img30, "Naše 42. kino s tortilama", {objectPosition: "0px -95px"}, Img31, "Náš první Adršpach", {})}
                 <p className={"text dividerText"}>Všimni jak sem identifikoval tu skálu :-)</p>
                 {this._renderLine(Img32, "Moje prvni extra zamilovana fotka s tebou", {}, Img33, "Naše prvni fotka s milencama", {})}
                 {this._renderLine(Img34, "Naše první Brno", {}, Img35, "Naše první pořádny feraty", {})}
