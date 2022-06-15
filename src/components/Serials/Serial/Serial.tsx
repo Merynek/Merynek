@@ -35,12 +35,12 @@ class Serial extends Component<ISerial> {
                     <VideoPlayer series={this.props.series} seriesNumber={this.props.number} />
                 </Col>
             </Row>
-            <div className="divider"></div>
+            <div className="dividerArea"/>
             {this.props.isSerial && (
                 <Row className="series">
                     <span>Série</span>
                     { this.renderSerieButtons() }
-                    <div className="divider"></div>
+                    <div className="dividerArea"/>
                 </Row>
             )}
             <Link className="back-to-serials-button" to="/serials"> Zpět na serialy</Link>
