@@ -51,68 +51,27 @@ const AppRouter = () => {
                 <Route path="/home" element={<Home />} />
                 <Route path="/serials" element={<Serials />} />
                 <Route path="/prcinka" element={<Prcinka />} />
-                <Route path="/serials/bbt" element={BbtSwitch()} />
-                <Route path="/serials/himym" element={HimymSwitch()} />
-                <Route path="/serials/marvel" element={MarvelSwitch()} />
-                <Route path="/serials/x-men" element={XmenSwitch()} />
-                <Route path="/serials/dc" element={DcSwitch()} />
+                <Route path="/serials/bbt/:number" element={<BbtComponent />} />
+                <Route path="/serials/himym/:number" element={<HimymComponent />} />
+                <Route path="/serials/marvel" element={<MarvelComponent />} />
+                <Route path="/serials/x-men" element={<XmenComponent />} />
+                <Route path="/serials/dc" element={<DcComponent />} />
             </Routes>
         </div>
     )
-
-    function BbtSwitch() {
-        return (
-          <Routes>
-            <Route path='/serials/bbt/:number' element={BbtComponent()}/>
-          </Routes>
-        );
-    }
-
-    function HimymSwitch() {
-        return (
-          <Routes>
-            <Route path='/serials/himym/:number' element={HimymComponent()}/>
-          </Routes>
-        );
-    }
-
-    function MarvelSwitch() {
-        return (
-          <Routes>
-            <Route path='/serials/marvel/:number' element={MarvelComponent()}/>
-          </Routes>
-        );
-    }
-
-    function XmenSwitch() {
-        return (
-          <Routes>
-            <Route path='/serials/x-men/:number' element={XmenComponent()}/>
-          </Routes>
-        );
-    }
-
-    function DcSwitch() {
-        return (
-          <Routes>
-            <Route path='/serials/dc/:number' element={DcComponent()}/>
-          </Routes>
-        );
-    }
 }
 
 export default AppRouter;
 
-function BbtComponent(): ReactNode {
+const BbtComponent = () => {
     const { number } = useParams();
     const json: Series[] = bbtJson;
-
     return (
         <Serial isSerial={true} key={number} number={number ? Number(number) : 1} series={json} name="Teorie velkého třesku" routeName="bbt"/>
     );
 }
 
-function HimymComponent(): ReactNode {
+const HimymComponent = () => {
     const { number } = useParams();
     const json: Series[] = himymJson;
 
@@ -121,7 +80,7 @@ function HimymComponent(): ReactNode {
     );
 }
 
-function MarvelComponent(): ReactNode {
+const MarvelComponent = () => {
     const { number } = useParams();
     const json: Series[] = marvelJson;
 
@@ -130,7 +89,7 @@ function MarvelComponent(): ReactNode {
     );
 }
 
-function XmenComponent(): ReactNode {
+const XmenComponent = () => {
     const { number } = useParams();
     const json: Series[] = xmenJson;
 
@@ -139,7 +98,7 @@ function XmenComponent(): ReactNode {
     );
 }
 
-function DcComponent(): ReactNode {
+const DcComponent = () => {
     const { number } = useParams();
     const json: Series[] = dcJson;
 

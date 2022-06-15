@@ -36,6 +36,7 @@ class VideoPlayer extends Component<Props, IState> {
             autoPlay: false,
             randomPlay: false
         }
+        debugger;
     }
 
     componentDidMount() {

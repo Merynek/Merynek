@@ -9,12 +9,12 @@ const Serials = () => {
             <span>Seriály</span>
             <Row>
                 <Col>
-                    <Link className="serial-button" to={`${pathname}/bbt`}>TBBT</Link>
+                    <Link className="serial-button" to={`${pathname}/bbt/1`}>TBBT</Link>
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <Link className="serial-button" to={`${pathname}/himym`}>HIMYM</Link>
+                    <Link className="serial-button" to={`${pathname}/himym/1`}>HIMYM</Link>
                 </Col>
             </Row>
             <Row>
