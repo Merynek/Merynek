@@ -10,7 +10,7 @@ interface ISerial {
     name: string;
     routeName: string;
     series: Series[];
-    isSerrial: boolean;
+    isSerial: boolean;
 }
 
 class Serial extends Component<ISerial> {
@@ -26,7 +26,7 @@ class Serial extends Component<ISerial> {
                     <span>{this.props.name}</span>
                 </Col>
             </Row>
-            {this.props.isSerrial && (
+            {this.props.isSerial && (
                 <Row>
             </Row>
             )}
@@ -36,7 +36,7 @@ class Serial extends Component<ISerial> {
                 </Col>
             </Row>
             <div className="divider"></div>
-            {this.props.isSerrial && (
+            {this.props.isSerial && (
                 <Row className="series">
                     <span>Série</span>
                     { this.renderSerieButtons() }

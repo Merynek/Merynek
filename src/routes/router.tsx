@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Switch, Route, RouteComponentProps } from 'react-router-dom';
+import React, {ReactNode, useEffect} from 'react';
+import {Route, useParams, Routes, useLocation} from 'react-router-dom';
 import Home from '../components/Home/Home';
 import Serials from '../components/Serials/Serials';
 import Serial from '../components/Serials/Serial/Serial';
@@ -13,9 +13,10 @@ import Prcinka from "../components/Prcinka/Prcinka";
 // @ts-ignore
 import hearFavicon from "../routes/heart.ico";
 
-class AppRouter extends Component<RouteComponentProps> {
-    componentDidMount() {
-        if (this.isPrcinka) {
+const AppRouter = () => {
+    const {pathname} = useLocation();
+    useEffect(() => {
+        if (isPrcinka()) {
             document.body.style.background = "#e37d89";
             document.title = "Prcinka"
             const favIcon = document.getElementById("favicon");
@@ -24,133 +25,125 @@ class AppRouter extends Component<RouteComponentProps> {
                 favicon.href = hearFavicon;
             }
         }
-    }
+    });
 
-    get isPrcinka(): boolean {
-        const {pathname} = this.props.location;
+    function isPrcinka(): boolean {
         return pathname === "/prcinka";
     }
 
-    get headerTitle(): string {
-        if (this.isPrcinka) {
+    function headerTitle(): string {
+        if (isPrcinka()) {
             return "PRCINKA ♥";
         }
         return "MERYNEK"
     }
 
-    get headerStyle() {
-        return `header ${this.isPrcinka && "prcinka"}`;
+    function headerStyle() {
+        return `header ${isPrcinka() && "prcinka"}`;
     }
 
 
-    render() {
-        return (
-            <div className="App">
-                <div className={this.headerStyle}>{this.headerTitle}</div>
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/home" component={Home} />
-                    <Route exact path="/serials" component={Serials} />
-                    <Route exact path="/prcinka" component={Prcinka} />
-                    <Route path="/serials/bbt" component={this.BbtSwitch} />
-                    <Route path="/serials/himym" component={this.HimymSwitch} />
-                    <Route path="/serials/marvel" component={this.MarvelSwitch} />
-                    <Route path="/serials/x-men" component={this.XmenSwitch} />
-                    <Route path="/serials/dc" component={this.DcSwitch} />
-                </Switch>
-            </div>
-        )
-    }
+    return (
+        <div className="App">
+            <div className={headerStyle()}>{headerTitle()}</div>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/serials" element={<Serials />} />
+                <Route path="/prcinka" element={<Prcinka />} />
+                <Route path="/serials/bbt" element={BbtSwitch()} />
+                <Route path="/serials/himym" element={HimymSwitch()} />
+                <Route path="/serials/marvel" element={MarvelSwitch()} />
+                <Route path="/serials/x-men" element={XmenSwitch()} />
+                <Route path="/serials/dc" element={DcSwitch()} />
+            </Routes>
+        </div>
+    )
 
-    private BbtSwitch() {
+    function BbtSwitch() {
         return (
-          <Switch>
-            <Route exact path='/serials/bbt' component={BbtComponent}/>
-            <Route path='/serials/bbt/:number' component={BbtComponent}/>
-          </Switch>
+          <Routes>
+            <Route path='/serials/bbt/:number' element={BbtComponent()}/>
+          </Routes>
         );
     }
 
-    private HimymSwitch() {
+    function HimymSwitch() {
         return (
-          <Switch>
-            <Route exact path='/serials/himym' component={HimymComponent}/>
-            <Route path='/serials/himym/:number' component={HimymComponent}/>
-          </Switch>
+          <Routes>
+            <Route path='/serials/himym/:number' element={HimymComponent()}/>
+          </Routes>
         );
     }
 
-    private MarvelSwitch() {
+    function MarvelSwitch() {
         return (
-          <Switch>
-            <Route exact path='/serials/marvel' component={MarvelComponent}/>
-            <Route path='/serials/marvel/:number' component={MarvelComponent}/>
-          </Switch>
+          <Routes>
+            <Route path='/serials/marvel/:number' element={MarvelComponent()}/>
+          </Routes>
         );
     }
 
-    private XmenSwitch() {
+    function XmenSwitch() {
         return (
-          <Switch>
-            <Route exact path='/serials/x-men' component={XmenComponent}/>
-            <Route path='/serials/x-men/:number' component={XmenComponent}/>
-          </Switch>
+          <Routes>
+            <Route path='/serials/x-men/:number' element={XmenComponent()}/>
+          </Routes>
         );
     }
 
-    private DcSwitch() {
+    function DcSwitch() {
         return (
-          <Switch>
-            <Route exact path='/serials/dc' component={DcComponent}/>
-            <Route path='/serials/dc/:number' component={DcComponent}/>
-          </Switch>
+          <Routes>
+            <Route path='/serials/dc/:number' element={DcComponent()}/>
+          </Routes>
         );
     }
 }
 
 export default AppRouter;
 
-function BbtComponent(route: RouteComponentProps) {
-    const number = Number(Object.create(route.match.params).number) || 1;
+function BbtComponent(): ReactNode {
+    const { number } = useParams();
     const json: Series[] = bbtJson;
 
     return (
-        <Serial isSerrial={true} key={number} number={number} series={json} name="Teorie velkého třesku" routeName="bbt"></Serial>
+        <Serial isSerial={true} key={number} number={number ? Number(number) : 1} series={json} name="Teorie velkého třesku" routeName="bbt"/>
     );
 }
 
-function HimymComponent(route: RouteComponentProps) {
-    const number = Number(Object.create(route.match.params).number) || 1;
+function HimymComponent(): ReactNode {
+    const { number } = useParams();
     const json: Series[] = himymJson;
 
     return (
-        <Serial isSerrial={true} key={number} number={number} series={json} name="Jak jsem poznal vaši matku" routeName="himym"></Serial>
+        <Serial isSerial={true} key={number} number={number ? Number(number) : 1} series={json} name="Jak jsem poznal vaši matku" routeName="himym"/>
     );
 }
 
-function MarvelComponent(route: RouteComponentProps) {
-    const number = Number(Object.create(route.match.params).number) || 1;
+function MarvelComponent(): ReactNode {
+    const { number } = useParams();
     const json: Series[] = marvelJson;
 
     return (
-        <Serial isSerrial={false} key={number} number={number} series={json} name="Marvel" routeName="marvel"></Serial>
+        <Serial isSerial={false} key={number} number={number ? Number(number) : 1} series={json} name="Marvel" routeName="marvel"/>
     );
 }
 
-function XmenComponent(route: RouteComponentProps) {
-    const number = Number(Object.create(route.match.params).number) || 1;
+function XmenComponent(): ReactNode {
+    const { number } = useParams();
     const json: Series[] = xmenJson;
 
     return (
-        <Serial isSerrial={false} key={number} number={number} series={json} name="X-men" routeName="x-men"></Serial>
+        <Serial isSerial={false} key={number} number={number ? Number(number) : 1} series={json} name="X-men" routeName="x-men"/>
     );
 }
 
-function DcComponent(route: RouteComponentProps) {
-    const number = Number(Object.create(route.match.params).number) || 1;
+function DcComponent(): ReactNode {
+    const { number } = useParams();
     const json: Series[] = dcJson;
 
     return (
-        <Serial isSerrial={false} key={number} number={number} series={json} name="DC Extended Universe" routeName="dc"></Serial>
+        <Serial isSerial={false} key={number} number={number ? Number(number) : 1} series={json} name="DC Extended Universe" routeName="dc"/>
     );
 }

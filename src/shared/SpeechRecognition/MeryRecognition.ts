@@ -25,7 +25,7 @@ export class MeryRecognition {
     constructor() {
         const {webkitSpeechRecognition} : IWindow = <IWindow><unknown>window;
         let isWebkit = webkitSpeechRecognition;
-        this.recognition = isWebkit ? new webkitSpeechRecognition() : new SpeechRecognition();
+        this.recognition = new webkitSpeechRecognition();
         this.listening = false;
         this.working = false;
         this.destroyed = false;
