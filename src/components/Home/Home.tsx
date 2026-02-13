@@ -10,6 +10,11 @@ class Home extends Component {
                 <Col>
                     <Link className="back-to-serials-button" to="/serials">Seriály</Link>
                 </Col>
+                <Col>
+                    <a className="back-to-serials-button" href={"./player"}>
+                        PLAYER
+                    </a>
+                </Col>
             </Row>
         </Container>
         )
