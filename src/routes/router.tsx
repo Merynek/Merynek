@@ -12,7 +12,6 @@ import { Series } from '../components/Serials/source/serialJson';
 import Prcinka from "../components/Prcinka/Prcinka";
 // @ts-ignore
 import hearFavicon from "../routes/heart.ico";
-import {Player} from "../components/Player/Player";
 
 const AppRouter = () => {
     const {pathname} = useLocation();
