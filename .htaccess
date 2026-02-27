@@ -1,4 +1,23 @@
 Options -MultiViews
 RewriteEngine On
+
+# 1. Vynucení HTTPS (pokud už nemáš v hlavním rootu)
+RewriteCond %{HTTPS} off
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 2. Základní cesta pro tuhle složku
+RewriteBase /player/
+
+# 3. Pokud soubor nebo složka fyzicky existuje (třeba obrázek nebo JS), naservíruj ho
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ index.html [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# 4. Pokud NEEXISTUJE, pošli požadavek na index.html v TÉTO složce
+# Tečka (.) znamená aktuální adresář, tedy /player/index.html
+RewriteRule . index.html [L]
+
+# --- Tvůj Auth (nech ho pod tím) ---
+AuthType Basic
+AuthName "Password Protected Area"
+AuthUserFile /var/www/clients/client1/web7/web/.htpasswd
+Require valid-user
